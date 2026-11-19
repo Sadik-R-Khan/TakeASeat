@@ -10,7 +10,26 @@ import { AuthService } from '../../../core/services/auth.service';
     <header class="navbar">
       <div class="navbar-inner">
         <a class="brand" [routerLink]="auth.isLoggedIn() ? auth.defaultRouteForRole() : '/login'">
-          TakeASeat
+          <svg class="brand-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="nbSeatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4f46e5" />
+                <stop offset="100%" stop-color="#7c3aed" />
+              </linearGradient>
+              <linearGradient id="nbAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fbbf24" />
+                <stop offset="100%" stop-color="#f59e0b" />
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="url(#nbSeatGrad)" />
+            <rect x="18" y="14" width="28" height="23" rx="6" fill="#ffffff" />
+            <rect x="15" y="37" width="34" height="10" rx="4" fill="#e0e7ff" />
+            <rect x="12" y="27" width="5" height="15" rx="2.5" fill="#c7d2fe" />
+            <rect x="47" y="27" width="5" height="15" rx="2.5" fill="#c7d2fe" />
+            <circle cx="45" cy="17" r="6" fill="url(#nbAccentGrad)" />
+            <path d="M45 13.5L46.2 16.2L49 16.4L46.9 18.2L47.6 21L45 19.4L42.4 21L43.1 18.2L41 16.4L43.8 16.2Z" fill="#ffffff" />
+          </svg>
+          <span class="brand-text">TakeASeat</span>
         </a>
 
         @if (auth.currentUser(); as user) {
@@ -67,6 +86,20 @@ import { AuthService } from '../../../core/services/auth.service';
       color: var(--text);
       letter-spacing: -0.02em;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: block;
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+      flex-shrink: 0;
+    }
+    .brand-text {
+      line-height: 1;
     }
     .nav-links {
       display: flex;

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="seatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <!-- Background squircle -->
+  <rect width="64" height="64" rx="16" fill="url(#seatGrad)" />
+  <!-- Seat Backrest -->
+  <rect x="18" y="14" width="28" height="23" rx="6" fill="#ffffff" />
+  <!-- Seat Cushion -->
+  <rect x="15" y="37" width="34" height="10" rx="4" fill="#e0e7ff" />
+  <!-- Left Armrest -->
+  <rect x="12" y="27" width="5" height="15" rx="2.5" fill="#c7d2fe" />
+  <!-- Right Armrest -->
+  <rect x="47" y="27" width="5" height="15" rx="2.5" fill="#c7d2fe" />
+  <!-- Gold Accent Star Badge -->
+  <circle cx="45" cy="17" r="6" fill="url(#accentGrad)" />
+  <path d="M45 13.5L46.2 16.2L49 16.4L46.9 18.2L47.6 21L45 19.4L42.4 21L43.1 18.2L41 16.4L43.8 16.2Z" fill="#ffffff" />
+</svg>
