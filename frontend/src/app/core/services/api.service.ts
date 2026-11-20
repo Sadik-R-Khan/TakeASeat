@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { API_BASE_URL } from '../config/api.config';
 import {
   Booking,
@@ -19,13 +19,24 @@ import {
 export class ApiService {
   private readonly http = inject(HttpClient);
 
+  private normalizePosterUrl<T extends { posterUrl?: string | null }>(item: T): T {
+    if (item && item.posterUrl && typeof item.posterUrl === 'string') {
+      item.posterUrl = item.posterUrl.replace(/^https?:\/\/[^/]+(\/api\/movies\/posters\/)/i, '$1');
+    }
+    return item;
+  }
+
   // Movies
   getMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${API_BASE_URL}/movies`);
+    return this.http.get<Movie[]>(`${API_BASE_URL}/movies`).pipe(
+      map((movies) => movies.map((m) => this.normalizePosterUrl(m)))
+    );
   }
 
   getMovie(id: number): Observable<Movie> {
-    return this.http.get<Movie>(`${API_BASE_URL}/movies/${id}`);
+    return this.http.get<Movie>(`${API_BASE_URL}/movies/${id}`).pipe(
+      map((m) => this.normalizePosterUrl(m))
+    );
   }
 
   getShowsForMovie(movieId: number): Observable<Show[]> {
@@ -33,13 +44,22 @@ export class ApiService {
   }
 
   createMovie(payload: CreateMovieRequest): Observable<Movie> {
-    return this.http.post<Movie>(`${API_BASE_URL}/movies`, payload);
+    if (payload.posterUrl) {
+      payload.posterUrl = payload.posterUrl.replace(/^https?:\/\/[^/]+(\/api\/movies\/posters\/)/i, '$1');
+    }
+    return this.http.post<Movie>(`${API_BASE_URL}/movies`, payload).pipe(
+      map((m) => this.normalizePosterUrl(m))
+    );
   }
 
   uploadMoviePoster(file: File): Observable<{ posterUrl: string }> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post<{ posterUrl: string }>(`${API_BASE_URL}/movies/posters`, formData);
+    return this.http.post<{ posterUrl: string }>(`${API_BASE_URL}/movies/posters`, formData).pipe(
+      map((res) => ({
+        posterUrl: res.posterUrl.replace(/^https?:\/\/[^/]+(\/api\/movies\/posters\/)/i, '$1')
+      }))
+    );
   }
 
   deleteMovie(id: number): Observable<void> {
